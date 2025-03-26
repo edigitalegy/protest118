@@ -11,7 +11,6 @@ if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
   }
 const auth = firebase.auth();
-const db = firebase.firestore();
 // Function to redirect to the home page
 function goHome() {
   window.location.href = "./test.html"; // Adjust this path if needed
@@ -22,6 +21,7 @@ function goHome() {
 // Initialize Firestore (Ensure Firebase is properly configured in your project)
 
 // Initialize Firestore (Ensure Firebase is properly configured in your project)
+const db = firebase.firestore();
 
 async function loadQuizResults() {
     try {
@@ -78,7 +78,7 @@ async function loadQuizResults() {
                 let detailsCell = document.createElement("td");
                 let button = document.createElement("button");
                 button.textContent = "View";
-                button.onclick = () => viewResponses(result.responses, result, totalTime, totalTries);
+                button.onclick = () => viewResponses(result, totalTime, totalTries);
                 detailsCell.appendChild(button);
 
                 row.appendChild(nameCell);
@@ -88,12 +88,11 @@ async function loadQuizResults() {
 
                 tbody.appendChild(row);
 
-                // Store data for CSV export
+                // Store data for CSV export (only Name, Total Time, Total Tries)
                 quizResultsArray.push({
                     name: result.name || "غير متوفر",
                     totalTime: totalTime,
-                    totalTries: totalTries,
-                    responses: result.responses // Store detailed responses
+                    totalTries: totalTries
                 });
             }
         });
@@ -104,10 +103,10 @@ async function loadQuizResults() {
         container.innerHTML = "";
         container.appendChild(table);
 
-        // Add Export Button
+        // Add Export Button (ALL Users)
         let exportBtn = document.createElement("button");
-        exportBtn.textContent = "Export to CSV";
-        exportBtn.onclick = () => exportToCSV(quizResultsArray);
+        exportBtn.textContent = "Export All Users to CSV";
+        exportBtn.onclick = () => exportAllUsersToCSV(quizResultsArray);
         container.appendChild(exportBtn);
 
     } catch (error) {
@@ -116,7 +115,7 @@ async function loadQuizResults() {
 }
 
 // Function to show responses in a modal instead of alert
-function viewResponses(responses, result, totalTime, totalTries) {
+function viewResponses(result, totalTime, totalTries) {
     let modalContent = document.getElementById("modalContent");
     if (!modalContent) {
         console.error("Error: modalContent not found in the DOM!");
@@ -127,7 +126,7 @@ function viewResponses(responses, result, totalTime, totalTries) {
     let responseDetails = `<p><strong>Total Time:</strong> ${totalTime} sec</p>
                            <p><strong>Total Tries:</strong> ${totalTries}</p><hr>`;
 
-    responseDetails += responses.map((res, index) => 
+    responseDetails += result.responses.map((res, index) => 
         `<p><strong>Q${index + 1}:</strong> ${res.question}</p>
          <p>Tries: ${res.tries}</p>
          <p>Time: ${res.duration} sec</p>
@@ -140,10 +139,10 @@ function viewResponses(responses, result, totalTime, totalTries) {
     let modal = document.getElementById("responseModal");
     modal.style.display = "block";
 
-    // Add export button inside modal
+    // Add export button inside modal (ONLY for this user)
     let exportModalBtn = document.createElement("button");
-    exportModalBtn.textContent = "Export This Quiz to CSV";
-    exportModalBtn.onclick = () => exportSingleQuizToCSV(result, totalTime, totalTries);
+    exportModalBtn.textContent = "Export This User to CSV";
+    exportModalBtn.onclick = () => exportSingleUserToCSV(result);
     modalContent.appendChild(exportModalBtn);
 }
 
@@ -152,40 +151,38 @@ function closeModal() {
     document.getElementById("responseModal").style.display = "none";
 }
 
-// Function to Export ALL Data to CSV
-function exportToCSV(data) {
+// Function to Export ALL Users to CSV (Only Name, Total Time, Total Tries)
+function exportAllUsersToCSV(data) {
     let csvContent = "data:text/csv;charset=utf-8,";
 
     // Add headers
-    csvContent += "Name,Total Time,Total Tries,Question,Tries,Time Spent\n";
+    csvContent += "Name,Total Time,Total Tries\n";
 
-    // Add rows with question details
+    // Add rows
     data.forEach(row => {
-        row.responses.forEach((response, index) => {
-            csvContent += `"${row.name}","${row.totalTime} sec","${row.totalTries}","Q${index + 1}: ${response.question}","${response.tries}","${response.duration} sec"\n`;
-        });
+        csvContent += `"${row.name}","${row.totalTime} sec","${row.totalTries}"\n`;
     });
 
     // Create a download link
     let encodedUri = encodeURI(csvContent);
     let link = document.createElement("a");
     link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "quiz_results.csv");
+    link.setAttribute("download", "all_users_results.csv");
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link); 
 }
 
-// Function to Export Single Quiz to CSV
-function exportSingleQuizToCSV(result, totalTime, totalTries) {
+// Function to Export a Single User's Quiz Data to CSV (Only that user)
+function exportSingleUserToCSV(result) {
     let csvContent = "data:text/csv;charset=utf-8,";
 
     // Add headers
-    csvContent += "Name,Total Time,Total Tries,Question,Tries,Time Spent\n";
+    csvContent += "Name,Question,Tries,Time Spent\n";
 
     // Add rows
     result.responses.forEach((response, index) => {
-        csvContent += `"${result.name}","${totalTime} sec","${totalTries}","Q${index + 1}: ${response.question}","${response.tries}","${response.duration} sec"\n`;
+        csvContent += `"${result.name}","Q${index + 1}: ${response.question}","${response.tries}","${response.duration} sec"\n`;
     });
 
     // Create a download link
