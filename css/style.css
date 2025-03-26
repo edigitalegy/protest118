@@ -1,0 +1,375 @@
+@charset "utf-8";
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Keep this for consistency */
+    font-family: inherit; /* Prevent overriding Bootstrap fonts */
+    font-weight: normal;
+	direction: ltr;
+
+}
+
+html {
+    direction: rtl; /* Only if your website isn't Arabic/Persian */
+}
+
+body {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 251, 0.9), rgba(255, 254, 247, 0.7));
+    background-attachment: fixed;
+    background-size: cover; /* Ensures the gradient covers the entire screen */
+    background-repeat: no-repeat;
+    font-family: Arial, Helvetica, sans-serif; /* Keep if not using Bootstrap's default font */
+    direction: rtl; /* Keep if your site is fully RTL */
+    margin: 0;
+    padding: 0;
+}
+
+a{text-decoration: none; }
+
+/*************************rotate epand icon*********/
+.rotate-icon {
+    transform: rotate(90deg);
+    display: inline-block; /* Ensures proper rotation */
+}
+/*************************change color btn select*********/
+.btn:active, .btn:focus {
+	background-color: #d6d6d6 !important; /* Green */
+	color: #666 !important;
+}
+/***********************************************container***********************************************************************/
+.container
+{
+	display: grid;
+	grid-template-columns:  1fr;
+	gap: 10px;
+    align-items: center;
+	justify-items: center;
+}
+/**********************************************elements************************************************************/
+  .container .main-video {
+    text-align: center; /* Centers inline elements like <video> */
+}
+.topicname
+{
+	color:rgb(0, 0, 0);
+	background:rgb(255, 255, 255,.2);
+	text-align: center;
+	margin-top: 2vh; /* Adjust the value as needed */
+}
+
+.container .main-video video {
+    width: auto;
+    max-width: 100%; /* Ensures responsiveness */
+    height: 88vh;
+    border-radius: 5px;
+}
+
+#formFrame, .youtube iframe
+{
+	width:85%;
+	height:90%;
+	border: none;
+}
+  .eleframe ,.youtube
+  {
+	width: 100%;
+	position: fixed;
+	outline: none;
+	border: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transform: translateX(100%);
+  }
+
+.eleframe.show,.youtube.show,.container .main-video.show
+{transform: translate(0%); opacity: 1;}
+
+.container .main-video.close
+{transform: translate(0%); opacity: 0;}
+
+  .hidden {
+	width: 100%;
+	position: fixed;
+	outline: none;
+	border: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background:rgb(255, 255, 255,.5);
+	transform: translateX(100%);  
+}
+/***********************************************adminlist***********************************************************************/
+.container .adminlist {
+    position: fixed;
+    left: 0px;
+    background: rgba(255, 255, 255, 0.9);
+    height: 100vh;
+    overflow-y: scroll;
+    opacity: 1;
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+    z-index: 1;
+    direction: rtl;
+    text-align: justify;
+    cursor: pointer;
+    width: 300px; /* Adjust as needed */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center; /* Center horizontally */
+	margin-top: 2vh; /* Adjust the value as needed */
+}
+
+#user-name {
+    width: 96%; /* Matches .adminlist width */
+    font-size: x-large;
+    text-align: center;
+    font-weight: bold;
+    margin: 0;
+    padding: 10px;
+    word-wrap: break-word; /* Ensures long words wrap */
+    overflow-wrap: break-word; /* Alternative for better compatibility */
+    white-space: normal; /* Ensures text wraps normally */
+}
+
+.container .adminlist button {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    direction: rtl;
+	width: 96%;
+}
+
+.expandadminlist{
+	position:fixed;
+	left: 0px;
+	border: none !important; /* Removes the border */
+	outline: none; /* Removes focus border (if needed) */
+	background: transparent; /* Optional: makes the background transparent */
+	z-index:1;
+    height: 100vh; /* Full screen height */
+    transition: opacity 0.5s ease-in-out; /* Smooth fade-in effect */
+	margin-top: 2vh; /* Adjust the value as needed */
+}
+.expandadminlist.show {
+    opacity: .5; transform: translateX(calc(var(--menu-width))); transition: 0.5s ease; z-index:1;}
+
+.expandadminlist.close {
+	opacity: .5; background:rgb(255, 255, 255,.9); transform: translateX(0%); transition: 0.5s ease; z-index:1;}
+
+.container .adminlist.show { 
+	transform: translate(0%); z-index:1;}
+
+.container .adminlist.close { 
+	transform: translate(-100%);z-index:1;}
+
+.container .adminlist::-webkit-scrollbar{
+	 width: 15px; }
+
+.container .adminlist::-webkit-scrollbar-track {
+	background: #ccc; 
+}
+.container .adminlist::-webkit-scrollbar-thumb {
+	background: #666;
+	border-radius: 50px;
+	cursor: pointer; }
+/***********************************************contentlist***********************************************************************/
+.container .contentlist
+{
+	position:fixed;
+	right: 0px;
+	background:rgb(255, 255, 255,.9);
+	height: 100vh;
+	overflow-y: scroll;	
+	transform: translateX(100%);
+	transition: .5s ease;
+	direction: ltr;
+	z-index:1;
+	margin-top: 2vh; /* Adjust the value as needed */
+}
+.container .contentlist::-webkit-scrollbar
+{
+	width: 20px;
+}
+
+.container .contentlist::-webkit-scrollbar-track
+{
+	background: #ccc;
+}
+.container .contentlist::-webkit-scrollbar-thumb
+{
+	background: #666;
+	border-radius: 50px;
+	cursor: pointer;
+}
+.container .contentlist.show
+  {
+	transform: translateX(0%); transition: .5s ease;	z-index:1;
+  }
+
+  .container .contentlist.close
+  {
+	transform: translateX(100%); transition: .5s ease;	z-index:1;
+  }
+
+.expandcontentlist {
+	position:fixed;
+	right: 0px;
+	border: none !important; /* Removes the border */
+	outline: none; /* Removes focus border (if needed) */
+	background: transparent; /* Optional: makes the background transparent */
+	z-index:1;
+    height: 100vh; /* Full screen height */
+    transition: opacity 0.5s ease-in-out; /* Smooth fade-in effect */
+	margin-top: 2vh; /* Adjust the value as needed */
+}
+
+.expandcontentlist.show {
+    opacity: .5;
+	transform: translateX(calc(-1* var(--menu-width)));
+	transition: 0.5s ease;
+	z-index:1;
+}
+
+.expandcontentlist.close {
+	opacity: .5;
+	background:rgb(255, 255, 255,.9);
+	transform: translateX(0%);
+	transition: 0.5s ease;
+	z-index:1;
+}
+/***********************************************dropdown btn***********************************************************************/
+.dropdown-menu {
+	width: 100%; /* Takes full container width */
+	max-width: 500px; /* Adjust to fit your design */
+  }
+.dropdown-item, #content_list button {
+	text-align: right;
+	display: flex;
+	justify-content: flex-start;
+	flex-direction: row-reverse; /* Icon after text */
+	align-items: center;
+	gap: 10px; /* Space between text and icon */
+  }
+
+  .dropdown-item.active, .dropdown-item:active {
+	background-color: #bbbbbb !important; /* Change to your desired color */
+	color: white !important; /* Text color */
+  }
+
+/***********************************************mobile***********************************************************************/
+@media (max-width: 991px) {
+    .container {
+        display: grid;
+        grid-template-columns: 1fr;
+    }
+	.container .main-video video
+	{
+		width: 100%;
+		height: 75vh;
+		border-radius: 5px;
+	}
+
+    .container .adminlist {
+        width: 70%; /* Adjust width */
+		height: 100vh; /* Adjust width */
+		margin-top: 10vh;
+    }
+	.expandadminlist{
+        height: 100vh; /* Adjust width */
+		margin-top: 10vh;
+    }
+
+	.container .contentlist {
+        width: 70%; /* Adjust width */
+		height: 100vh; /* Adjust width */
+		margin-top: 10vh;
+    }
+	.expandcontentlist{
+        height: 100vh; /* Adjust width */
+		margin-top: 10vh;
+    }
+
+    .youtube iframe, .eleframe iframe {
+        width: 100%;
+        height: 70vh; /* Adjusted for better mobile experience */
+    }
+	.dropdown-menu {
+		width: 100%; /* Takes full container width */
+	}
+	
+}
+
+/***********************************************************/
+@media (max-width: 768px) 
+{
+	.container
+	{
+		grid-template-columns: 1fr;
+	}
+
+	.container .main-video video
+	{
+		width: 100%;
+		height: 75vh;
+		border-radius: 5px;
+	}
+	.youtube iframe , .eleframe iframe
+	{
+		width: 100%;
+		height: 100vh;
+
+	}
+    .container .adminlist {
+        width: 70%; /* Adjust width */
+		height: 100vh; /* Adjust width */
+		margin-top: 15vh;
+    }
+	.expandadminlist{
+        height: 100vh; /* Adjust width */
+		margin-top: 15vh;
+    }
+
+	.container .contentlist {
+        width: 70%; /* Adjust width */
+		height: 100vh; /* Adjust width */
+		margin-top: 15vh;
+
+    }
+	.expandcontentlist{
+        height: 100vh; /* Adjust width */
+		margin-top: 15vh;
+    }
+
+}
+
+@media (max-width: 768px) {
+	.responsive-dropdown .dropdown-menu {
+	  width: 100% !important; /* Full width dropdown on small screens */
+	}
+  }
+  
+  @media (max-width: 576px) {
+	.responsive-dropdown button {
+	  font-size: 14px; /* Even smaller font on very small screens */
+	  padding: 8px; /* Adjust padding */
+	}
+  }
+
+@media only screen and (max-width: 768px)
+{
+	body
+	{
+		font-size: small;
+	}
+}
+
+
+
+

@@ -1,0 +1,9 @@
+body {
+  font-family: "Tajawal", sans-serif; /* Arabic-friendly font */
+  background-color: #f8f9fa;
+  direction: rtl; /* Ensures full RTL support */
+  text-align: right;
+}
+.card {
+  border-radius: 10px;
+}
