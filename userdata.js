@@ -1,5 +1,4 @@
 import { db, auth } from "./js/firebase.js";
-import { storeUserSession} from "./js/persistent.js";
 
 const databasename = "usersid";
 const takeoffpage = "./content.html";
