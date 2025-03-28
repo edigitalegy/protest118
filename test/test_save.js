@@ -119,20 +119,21 @@ async function storeQuizCheck() {
     try {
         const docSnapshot = await quizResultRef.get(); // Fetch document once
         
-        if (docSnapshot.exists) {
+        if (docSnapshot.exists) { // Check if document exists
             const data = docSnapshot.data(); // Get document data
 
-            // Check if "quizResults" field exists in the document
-            if (data && data.quizResults) {
+            // Ensure "quizResults" field exists and is not empty
+            if (data?.quizResults) { 
                 displayQuizResult("لقد قمت بالإجابة على الاختبار مسبقاً ولا يمكنك المحاولة مرة أخرى.", true);
-                return { exists: true, userId }; // Return userId as well
+                return { exists: true, userId, quizResultRef }; // Return full reference
             }
         }
 
-        return { exists: false, quizResultRef, userId }; // Return userId with quiz reference
+        // Document does not exist or does not contain "quizResults"
+        return { exists: false, quizResultRef, userId }; 
     } catch (error) {  
         displayQuizResult("حدث خطأ أثناء التحقق من المحاولة السابقة: " + error.message, true);
-        return { exists: true, userId }; // Return userId even if there's an error
+        return { exists: true, userId, quizResultRef }; // Return full reference in case of an error
     }
 }
 /***********************************Firestore Storage Function***************************************************/
