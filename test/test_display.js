@@ -199,6 +199,11 @@ function handleAnswerSelection(element, selectedOption, event)
     feedbackContainer.style.borderRadius = '8px';
     
     if (selectedOption === item.answer) {
+        console.log(currentQuestionIndex);
+        console.log(stateAnswers.correct);
+
+        if(stateAnswers.correct === currentQuestionIndex )
+        {
         stateAnswers.correct++;
         element.classList.add('correct-answer');
         element.innerHTML += ' <span class="icon check-icon">✔</span>';
@@ -206,6 +211,7 @@ function handleAnswerSelection(element, selectedOption, event)
         feedbackContainer.classList.add('alert-success');
         counttry[currentQuestionIndex] = stateAnswers.wrong++;
         stateAnswers.wrong = 0;
+        }
     } else {
         stateAnswers.wrong++;
         element.classList.add('wrong-answer');
