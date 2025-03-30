@@ -7,7 +7,7 @@ const groupone = "./test.html";
 const grouptwo = "./test.html";
 const groupyhree = "./test.html";
 const groupfour = "./test.html";
-const masterpage = "./result.html";
+const masterpage = "./userdata.html";
 
 //window.onload = checkUserSession;
 /****************************************************************************************************************/
